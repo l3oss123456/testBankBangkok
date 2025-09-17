@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { ITodoListPageProps } from "../types/todo.types";
 import { withTodoListLogic } from "../logic/TodoListPageLogic";
 import TodoItem from "../components/TodoItem";
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from "@hello-pangea/dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import "./TodoListPage.css";
 
 const TodoListPage: React.FC<ITodoListPageProps> = ({
@@ -15,23 +10,13 @@ const TodoListPage: React.FC<ITodoListPageProps> = ({
   addTodo,
   toggleTodo,
   deleteTodo,
-  reorderTodos,
+  handleDragEnd,
 }) => {
   const [input, setInput] = useState("");
 
   const handleAdd = () => {
     addTodo(input);
     setInput("");
-  };
-
-  const handleDragEnd = (result: DropResult) => {
-    if (!result.destination) return;
-
-    const newTodos = Array.from(todos);
-    const [moved] = newTodos.splice(result.source.index, 1);
-    newTodos.splice(result.destination.index, 0, moved);
-
-    reorderTodos(newTodos);
   };
 
   return (
