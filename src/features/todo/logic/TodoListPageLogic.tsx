@@ -6,12 +6,10 @@ import { DropResult } from "@hello-pangea/dnd";
 export function withTodoListLogic<T>(WrappedComponent: React.ComponentType<T>) {
   return function WithTodoListLogic(props: Omit<T, keyof ITodoListPageProps>) {
     const [todos, setTodos] = useState<ITodo[]>(defaultTodos);
-    const [input, setInput] = useState("");
 
     const addTodo = (text: string) => {
       if (!text.trim()) return;
       setTodos((prev) => [...prev, { id: Date.now(), text, completed: false }]);
-      setInput("");
     };
 
     const toggleTodo = (id: number) => {
@@ -25,10 +23,6 @@ export function withTodoListLogic<T>(WrappedComponent: React.ComponentType<T>) {
     const deleteTodo = (id: number) => {
       setTodos((prev) => prev.filter((todo) => todo.id !== id));
     };
-
-    // const handleAddClick = () => {
-    //   addTodo(input);
-    // };
 
     const handleDragEnd = (result: DropResult) => {
       if (!result.destination) return;
